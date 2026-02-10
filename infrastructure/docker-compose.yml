@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: infrastructure/backend.Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: infrastructure/frontend.Dockerfile
+    ports:
+      - "3000:3000"
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: nyayai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis:7
